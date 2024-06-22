@@ -108,13 +108,19 @@ class singlehanderView extends WatchUi.WatchFace {
         var innerRad = outerRad - 25 * scale_to_fenix;
 		var distfromside = 45 * scale_to_fenix;
 		
-		
 		dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
 
-        // set up a for loop and draw all 12 numberals in their correct position
+        // Set up a for loop and draw all 12 numberals in their correct position
         for (var i = 1; i <= 12; i += 1) {
+            // Decide what digit to draw
             var actualNumber = (i+2) % 12 + 1;
-            // pad the number with 0
+            
+            // Depending on the user's device setting for 24-hour time, add 12 to the number if we're past midday
+            if (System.getDeviceSettings().is24Hour && System.getClockTime().hour >= 12){
+                actualNumber = actualNumber + 12;
+            }
+
+            // Pad the number with 0
             if (actualNumber < 10) {
                 actualNumber = "0" + actualNumber;
             }
